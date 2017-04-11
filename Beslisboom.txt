@@ -1,0 +1,27 @@
+BladType, Heeft de boom bladeren of naalden?
+BladVorm, Welke vorm heeft het blad?
+BladVorm, HartvormigeRand, Het blad is hartvormig
+BladVorm, IngesnedenRand, Het blad is ingesneden
+BladVorm, LangwerpigeRand, Het blad is langwerpig
+NaaldConfiguratie, Welke vorm heeft de naald?
+NaaldConfiguratie, LineaireNaald, De naald is lineair
+NaaldConfiguratie, LancetVormigeNaald, De naald is lancetvormig
+NaaldConfiguratie, CladodeNaald, De naald heeft de vorm van een cladode
+LineaireNaald, Het is een denneboom
+LancetVormigeNaald, Het is een taxus
+CladodeNaald, Het is een Japanse parasolde
+HartvormigeRand, HartvormigeGladdeRand, Rand van het blad is glad
+HartvormigeRand, HartvormigeStekeligeRand, Rand van het blad is stekelig
+BladType, BladVorm, De boom heeft bladeren
+BladType, NaaldConfiguratie, De boom heeft naalden
+HartvormigeRand, Hoe ziet de rand van het blad eruit?
+HartvormigeGladdeRand, De boom is een beuk
+HartvormigeStekeligeRand, Het is een lindeboom
+IngesnedenRand, Hoe ziet de rand van het blad eruit?
+IngesnedenRand, IngesnedenGladdeRand, Rand van het blad is glad
+IngesnedenGladdeRand, De boom is een eik
+LangwerpigeRand, Hoe ziet de rand van het blad eruit?
+LangwerpigeRand, LangwerpigeStekeligeRand, Rand van het blad is stekelig
+LangwerpigeRand, LangwerpigeGekarteldeRand, Rand van het blad is gekarteld
+LangwerpigeStekeligeRand, De boom is een kastanje
+LangwerpigeGekarteldeRand, Het is een vogelkers
