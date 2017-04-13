@@ -39,7 +39,6 @@ function readLine(line){
         readFusion(line);
     }else if(itemPattern.test(line)){
         readItem(line);
-
     }else if(storePattern.test(line)){
         currentshop++;
     }
@@ -47,10 +46,8 @@ function readLine(line){
 
 function readFusion(line){
     var fusion,name,items;
-
     items = line.split(" = ")[0];
     name = line.split(" = ")[1];
-
     fusion = new Fusion(name);
     fusion.itemsReq = items.split(" + ");
     fusions.push(fusion);
@@ -145,7 +142,7 @@ function cheapestItem(item,history){
     var newPath = concatToNewArray(path);
     for (var i in item.fusionOptions){
         var fusion = item.fusionOptions[i];
-        if (pathTaken(fusion,path)){continue;}
+        if (pathTaken(fusion,path)){continue;} // voorkomt oneindige loop
         var order = cheapestFusion(fusion,path);
         if (order[0]<price){
             price = order[0];
@@ -162,8 +159,7 @@ function concatToNewArray(add){
 }
 
 function cheapestFusion(fusion, history){
-    var path = [];
-    path = path.concat(history);
+    var path = concatToNewArray(history);
     path.push(fusion);
     var price = 0;
     var newPath = concatToNewArray(path);
@@ -178,7 +174,7 @@ function cheapestFusion(fusion, history){
 }
 
 function pathTaken(unit,history){
-    return (history.indexOf(unit) > -1 || history.length > 3);
+    return (history.indexOf(unit) > -1 || history.length > 6);
 }
 
 function searchItem(name){
@@ -189,5 +185,6 @@ function searchItem(name){
         }
     }
 }
+
 readData();
-startCheapest("Blue Beret");
+startCheapest("Glitter Arrow");
