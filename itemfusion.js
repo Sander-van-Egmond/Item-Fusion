@@ -116,59 +116,62 @@ function addFusions(item){
     }
 }
 
-function cheapest(item){
-    cheapestOptions(item,item.cheapestPrice,[item],[]);
+function startCheapest(itemString){
+    var item = searchItem(itemString);
+    var result = cheapestItem(item,[]);
+    console.log("price: " + result[0]);
+    for (var i in result[1]){
+        console.log(result[1][i]);
+        if (result[1][i] instanceof Item){
+            //console.log(result[1][i].name);
+        }
+    }
 }
 
-function cheapestOptions(item,oldPrice,oldReqs,oldHistory){
-    var cheapest = oldPrice;
-    var requirements = oldReqs;
-    var history = oldHistory;
-    if (checkHistory(item,history)){return}
+function cheapestItem(item,history){
+    var price = item.price;
+    var path = [];
+    var options = [];
+    path = path.concat(history);
+    path.push(item);
+
     for (var i in item.fusionOptions){
-        history.push(item);
-        cheapestReqs(item.fusionOptions[i],history);
-        history.splice(history.length-1,1);
-        var update = updateCheapest(cheapest, requirements, item.fusionOptions[i]);
-        cheapest = update[0];
-        requirements = update[1];
+        var fusion = item.fusionOptions[i];
+        if (pathTaken(fusion,path)){continue;}
+        var order = cheapestFusion(fusion,path);
+        if (order[0]<price){
+            price = order[0];
+            path = order[1];
+        }
     }
-    item.cheapestPrice = cheapest;
-    item.cheapestReqs = requirements;
+    return [price, path];
 }
 
-function cheapestReqs(fusion,history){
+function cheapestFusion(fusion, history){
+    var path = [];
+    path = path.concat(history);
+    path.push(fusion);
+    var price = 0;
+
     for (var i in fusion.itemsReq){
-        console.log(history.length);
-        cheapestOptions(fusion.itemsReq[i],fusion.itemsReq[i].cheapestPrice,[fusion.itemsReq[i]],history);
+        var item = fusion.itemsReq[i];
+        var result = cheapestItem(item,path);
+        price += result[0];
     }
+    return [price, path];
 }
 
-function checkHistory(item,history){
-    return (history.indexOf(item) > -1 || history.length > 2);
+function pathTaken(unit,history){
+    return (history.indexOf(unit) > -1 || history.length > 9);
 }
 
-function updateCheapest(oldCheapest,requirements,fusion){
-    var newCheapest = compareCost(oldCheapest, fusion);
-     if (newCheapest < oldCheapest){
-        requirements = fusion.itemsReq;
+function searchItem(name){
+    for (var i in items){
+        var item = items[i];
+        if (item.name === name){
+            return item;
+        }
     }
-    return [newCheapest,requirements];
 }
-
-function compareCost(oldPrice, fusion) {
-    var newPrice = 0;
-    for (var i in fusion.itemsReq) {
-        newPrice += fusion.itemsReq[i].price;
-    }
-    if (newPrice < oldPrice) {
-        return newPrice;
-    }
-    return oldPrice;
-}
-
-
 readData();
-cheapest(items[0]);
-
-
+startCheapest("Potion");
