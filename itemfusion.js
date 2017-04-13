@@ -140,11 +140,8 @@ function printHistory(list){
 
 function cheapestItem(item,history){
     var price = item.price;
-    var options = [];
     var path = concatToNewArray(history);
-
     path.push(item);
-    printHistory(path);
     var newPath = concatToNewArray(path);
     for (var i in item.fusionOptions){
         var fusion = item.fusionOptions[i];
@@ -152,7 +149,7 @@ function cheapestItem(item,history){
         var order = cheapestFusion(fusion,path);
         if (order[0]<price){
             price = order[0];
-            var newPath = order[1];
+            newPath = order[1];
         }
     }
     return [price, newPath];
@@ -169,13 +166,15 @@ function cheapestFusion(fusion, history){
     path = path.concat(history);
     path.push(fusion);
     var price = 0;
-
+    var newPath = concatToNewArray(path);
     for (var i in fusion.itemsReq){
         var item = fusion.itemsReq[i];
         var result = cheapestItem(item,path);
         price += result[0];
+        newPath = newPath.concat(result[1].slice(path.length));
+
     }
-    return [price, path];
+    return [price, newPath];
 }
 
 function pathTaken(unit,history){
@@ -191,4 +190,4 @@ function searchItem(name){
     }
 }
 readData();
-startCheapest("At Dusk");
+startCheapest("Blue Beret");
