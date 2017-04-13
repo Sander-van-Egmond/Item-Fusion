@@ -119,32 +119,49 @@ function addFusions(item){
 function startCheapest(itemString){
     var item = searchItem(itemString);
     var result = cheapestItem(item,[]);
-    console.log("price: " + result[0]);
-    for (var i in result[1]){
-        console.log(result[1][i]);
-        if (result[1][i] instanceof Item){
-            //console.log(result[1][i].name);
+    console.log("\n\nprice: " + result[0]);
+    printHistory(result[1]);
+}
+
+function printHistory(list){
+    console.log("\nPath:");
+    for (var i in list){
+        var unit = list[i];
+        if (unit instanceof Item){
+            console.log("Item: "+unit.name);
+        }else if(unit instanceof Fusion){
+            console.log("Fusion: "+ unit.name.name);
+        }else{
+            console.log("ERROR");
         }
+
     }
 }
 
 function cheapestItem(item,history){
     var price = item.price;
-    var path = [];
     var options = [];
-    path = path.concat(history);
-    path.push(item);
+    var path = concatToNewArray(history);
 
+    path.push(item);
+    printHistory(path);
+    var newPath = concatToNewArray(path);
     for (var i in item.fusionOptions){
         var fusion = item.fusionOptions[i];
         if (pathTaken(fusion,path)){continue;}
         var order = cheapestFusion(fusion,path);
         if (order[0]<price){
             price = order[0];
-            path = order[1];
+            var newPath = order[1];
         }
     }
-    return [price, path];
+    return [price, newPath];
+}
+
+function concatToNewArray(add){
+    var newArray = [];
+    newArray = newArray.concat(add);
+    return newArray;
 }
 
 function cheapestFusion(fusion, history){
@@ -162,7 +179,7 @@ function cheapestFusion(fusion, history){
 }
 
 function pathTaken(unit,history){
-    return (history.indexOf(unit) > -1 || history.length > 9);
+    return (history.indexOf(unit) > -1 || history.length > 3);
 }
 
 function searchItem(name){
@@ -174,4 +191,4 @@ function searchItem(name){
     }
 }
 readData();
-startCheapest("Potion");
+startCheapest("At Dusk");
