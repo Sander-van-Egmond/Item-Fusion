@@ -1,1 +1,0 @@
-Voeg hier jouw implementaties van de Javascript opdrachten toe
